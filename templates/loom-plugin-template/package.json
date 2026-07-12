@@ -1,0 +1,32 @@
+{
+  "name": "loom-plugin-template",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Template for a third-party Loom store plugin — rename me to loom-plugin-<name>.",
+  "keywords": ["loom", "loom-plugin"],
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "test": "vitest run",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
+  },
+  "peerDependencies": {
+    "@loom/event-runtime": "*",
+    "@loom/snapshot-runtime": "*"
+  },
+  "devDependencies": {
+    "@loom/event-runtime": "*",
+    "@loom/snapshot-runtime": "*",
+    "@loom/testing": "*",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,66 @@
+# loom-plugins
+
+Community home for **third-party (3P) Loom plugins** — and the reference template for writing
+your own. You do **not** have to host your plugin here: a Loom plugin is just a package you
+publish under any name/scope; this repo is the curated, discoverable index plus a starting point.
+
+For the framework itself, see [loom](https://github.com/chhetrisushil/loom). First-party (1P)
+plugins live in that repo under `plugins/` as `@loom/plugin-*`; the canonical plugin docs are
+[`docs/plugins.md`](https://github.com/chhetrisushil/loom/blob/main/docs/plugins.md) and
+[ADR 0043](https://github.com/chhetrisushil/loom/blob/main/docs/adr/0043-plugin-packaging-and-1p-3p-separation.md).
+
+## What a Loom plugin is
+
+A package that contributes a concrete implementation of an existing Loom **seam** (a store,
+dispatcher, worker, telemetry adapter, renderer, LLM provider, protocol client) and/or a
+**preset** — a pure function returning a `Partial<LoomConfig>` (or a singleton value like a
+`StorageConfig`). It is **statically imported** and passed to `defineConfig`. There is no plugin
+runtime, no discovery, no hook bus, no lifecycle — using a plugin is always an explicit `import`
+plus one line of config.
+
+### The contract
+
+1. implement an existing **SPI** and/or export a **preset** `(opts) => Partial<LoomConfig>`;
+2. be **statically imported** and passed to `defineConfig` — no `node_modules` scanning (P5);
+3. contribute only to **existing seams** — never a kernel hook, never a reducer into the replay
+   fold (durable custom facts are ordinary app events folded by user-space projections);
+4. be **byte-identical to hand-wiring** after boot (zero runtime overhead);
+5. ship **conformance tests** for each SPI you implement (`@loom/testing/conformance`);
+6. be **sugar, never a gate** — everything a plugin does, an app can also hand-wire.
+
+## Naming & discovery
+
+- Name it **`loom-plugin-<name>`** (or `@yourscope/loom-plugin-<name>`).
+- Add the npm keyword **`loom-plugin`** so it is discoverable.
+- Depend only on the published `@loom/*` **SPI** packages, not on kernel internals.
+
+## Quick start
+
+Copy [`templates/loom-plugin-template`](templates/loom-plugin-template), rename it, and implement
+your seam. Wiring it into an app is symmetric with a first-party plugin — no privileged `kind:`:
+
+```ts
+import { defineConfig } from "@loom/app";
+import { myStorage } from "loom-plugin-mystore";
+
+export const app = defineConfig({ storage: myStorage({ url: process.env.DB_URL! }) });
+```
+
+## Security (read this)
+
+A preset and any adapter constructor run at **composition time with full host authority, and
+cannot be sandboxed** — K7 data-plane isolation governs *tool effects at runtime*, not the code
+that builds your runtime. Importing a plugin grants it boot-time authority, exactly like any
+dependency you `import`. Vet 3P plugins as you would any dependency; a plugin listed here is
+**not** vetted by Loom core (that is what the `@loom/` first-party scope is for).
+
+## Submitting a plugin
+
+Open a PR adding your published package to the index below (name, one-line description, the SPI it
+implements, and a link). Listing is discovery, not endorsement.
+
+## Index
+
+| Plugin | Seam | Description |
+|---|---|---|
+| _(your plugin here)_ | | |

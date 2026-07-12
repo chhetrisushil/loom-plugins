@@ -1,0 +1,6 @@
+{
+  "name": "loom-plugins",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Community home + template for third-party Loom plugins"
+}
