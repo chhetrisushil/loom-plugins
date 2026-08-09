@@ -33,7 +33,9 @@ plus one line of config.
 
 - Name it **`loom-plugin-<name>`** (or `@yourscope/loom-plugin-<name>`).
 - Add the npm keyword **`loom-plugin`** so it is discoverable.
-- Depend only on the published `@loom/*` **SPI** packages, not on kernel internals.
+- Depend only on the `@loom/*` **SPI** packages, not on kernel internals. (They are not on npm
+  yet — inside this repo they resolve via the root `pnpm.overrides`, which `link:` them from a
+  sibling `../loom` checkout; see the template's README for what to do when you copy it out.)
 
 ## Quick start
 
