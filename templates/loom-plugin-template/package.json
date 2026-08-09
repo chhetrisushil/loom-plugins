@@ -2,8 +2,11 @@
   "name": "loom-plugin-template",
   "version": "0.0.0",
   "private": true,
-  "description": "Template for a third-party Loom store plugin — rename me to loom-plugin-<name>.",
-  "keywords": ["loom", "loom-plugin"],
+  "description": "Template for a third-party Loom store plugin \u2014 rename me to loom-plugin-<name>.",
+  "keywords": [
+    "loom",
+    "loom-plugin"
+  ],
   "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,12 +23,14 @@
   },
   "peerDependencies": {
     "@loom/event-runtime": "*",
+    "@loom/plugin-kit": "*",
     "@loom/snapshot-runtime": "*"
   },
   "devDependencies": {
+    "@loom/conformance": "*",
     "@loom/event-runtime": "*",
+    "@loom/plugin-kit": "*",
     "@loom/snapshot-runtime": "*",
-    "@loom/testing": "*",
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"
   }

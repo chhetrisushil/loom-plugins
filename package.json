@@ -3,5 +3,21 @@
   "version": "0.0.0",
   "private": true,
   "description": "Community home + template for third-party Loom plugins",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@9.14.4",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "clean": "pnpm -r clean"
+  },
+  "pnpm": {
+    "overrides": {
+      "@loom/core": "link:../loom/packages/core",
+      "@loom/event-runtime": "link:../loom/packages/event-runtime",
+      "@loom/snapshot-runtime": "link:../loom/packages/snapshot-runtime",
+      "@loom/conformance": "link:../loom/packages/conformance",
+      "@loom/plugin-kit": "link:../loom/packages/plugin-kit",
+      "@loom/testing": "link:../loom/tools/testing"
+    }
+  }
 }

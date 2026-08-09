@@ -6,7 +6,8 @@
 // Replace the bodies below with your real backend. Keep the *shape*: a preset that
 // constructs your stores and returns `{ kind: "custom", ... }`.
 
-import type { BranchRegistry, EventStore } from "@loom/event-runtime";
+import type { EventStore } from "@loom/event-runtime";
+import type { CustomStorage } from "@loom/plugin-kit";
 import type { SnapshotStore } from "@loom/snapshot-runtime";
 
 export interface MyStorageOptions {
@@ -19,15 +20,12 @@ export interface MyStorageOptions {
 /**
  * `defineConfig({ storage })` preset for your backend. Constructs the stores eagerly
  * (an app only imports this plugin when it wants this backend, so there is nothing to
- * lazy-load). Returns the `custom` storage descriptor — the same shape every store
- * plugin returns, first- or third-party.
+ * lazy-load). Returns {@link CustomStorage} — the same descriptor every store plugin returns,
+ * first- or third-party. Name the TYPE rather than re-declaring its shape inline: a copied
+ * shape silently stops matching when the contract evolves, whereas the imported type turns
+ * that into a compile error.
  */
-export function myStorage(options: MyStorageOptions): {
-  kind: "custom";
-  eventStore: EventStore;
-  snapshotStore: SnapshotStore;
-  branchRegistry?: BranchRegistry;
-} {
+export function myStorage(options: MyStorageOptions): CustomStorage {
   return {
     kind: "custom",
     eventStore: new MyEventStore(options.url),

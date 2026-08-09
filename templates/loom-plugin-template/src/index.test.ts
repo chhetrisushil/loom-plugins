@@ -3,7 +3,10 @@
 //
 // Uncomment once your MyEventStore / MySnapshotStore are implemented:
 //
-// import { runEventStoreConformance, runSnapshotStoreConformance } from "@loom/testing/conformance";
+// import {
+//   runEventStoreConformance,
+//   runSnapshotStoreConformance,
+// } from "@loom/conformance";
 // import { MyEventStore, MySnapshotStore } from "./index";
 //
 // runEventStoreConformance(() => new MyEventStore(":memory:"));
