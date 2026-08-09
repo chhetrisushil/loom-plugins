@@ -25,7 +25,8 @@ plus one line of config.
 3. contribute only to **existing seams** — never a kernel hook, never a reducer into the replay
    fold (durable custom facts are ordinary app events folded by user-space projections);
 4. be **byte-identical to hand-wiring** after boot (zero runtime overhead);
-5. ship **conformance tests** for each SPI you implement (`@loom/testing/conformance`);
+5. ship **conformance tests** for each SPI you implement (`@loom/conformance` — the import
+   `loom plugin check` looks for);
 6. be **sugar, never a gate** — everything a plugin does, an app can also hand-wire.
 
 ## Naming & discovery
