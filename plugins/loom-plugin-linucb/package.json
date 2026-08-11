@@ -1,0 +1,37 @@
+{
+  "name": "loom-plugin-linucb",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LinUCB contextual bandit for Loom — a third-party implementation of the @loom/learning Policy SPI.",
+  "keywords": [
+    "loom",
+    "loom-plugin",
+    "bandit",
+    "linucb",
+    "contextual-bandit"
+  ],
+  "license": "Apache-2.0",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "test": "vitest run",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
+  },
+  "peerDependencies": {
+    "@loom/learning": "*"
+  },
+  "devDependencies": {
+    "@loom/learning": "*",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8",
+    "@loom/conformance": "*"
+  }
+}
