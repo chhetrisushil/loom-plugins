@@ -66,4 +66,5 @@ implements, and a link). Listing is discovery, not endorsement.
 
 | Plugin | Seam | Description |
 |---|---|---|
+| [`loom-plugin-linucb`](plugins/loom-plugin-linucb) | `Policy` (`@loom/learning`) | LinUCB contextual bandit — picks per-observation, with honest ε-greedy propensities so the log stays evaluable |
 | _(your plugin here)_ | | |

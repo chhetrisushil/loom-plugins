@@ -17,7 +17,10 @@
       "@loom/snapshot-runtime": "link:../loom/packages/snapshot-runtime",
       "@loom/conformance": "link:../loom/packages/conformance",
       "@loom/plugin-kit": "link:../loom/packages/plugin-kit",
-      "@loom/testing": "link:../loom/tools/testing"
+      "@loom/testing": "link:../loom/tools/testing",
+      "@loom/learning": "link:../loom/packages/learning",
+      "@loom/analytics": "link:../loom/packages/analytics",
+      "@loom/reasoning": "link:../loom/packages/reasoning"
     }
   }
 }
