@@ -2,7 +2,7 @@
 
 A starting point for a third-party [Loom](https://github.com/chhetrisushil/loom) plugin. This
 example implements a **store** backend and exports a `myStorage()` preset; the same shape works
-for any seam (dispatcher, telemetry, renderer, LLM provider, …).
+for any seam (dispatcher, telemetry, renderer, LLM provider, learned policy, …).
 
 ## Use it
 

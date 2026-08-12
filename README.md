@@ -12,10 +12,11 @@ plugins live in that repo under `plugins/` as `@loom/plugin-*`; the canonical pl
 ## What a Loom plugin is
 
 A package that contributes a concrete implementation of an existing Loom **seam** (a store,
-dispatcher, worker, telemetry adapter, renderer, LLM provider, protocol client) and/or a
-**preset** — a pure function returning a `Partial<LoomConfig>` (or a singleton value like a
-`StorageConfig`). It is **statically imported** and passed to `defineConfig`. There is no plugin
-runtime, no discovery, no hook bus, no lifecycle — using a plugin is always an explicit `import`
+dispatcher, worker, telemetry adapter, renderer, LLM provider, protocol client, learned policy)
+and/or a **preset** — a pure function returning a `Partial<LoomConfig>` (or a singleton value like
+a `StorageConfig`). It is **statically imported** and, for every seam but one, passed to
+`defineConfig`. There is no plugin runtime, no discovery, no hook bus, no lifecycle — using a
+plugin is always an explicit `import`
 plus one line of config.
 
 ### The contract
@@ -48,6 +49,21 @@ import { myStorage } from "loom-plugin-mystore";
 
 export const app = defineConfig({ storage: myStorage({ url: process.env.DB_URL! }) });
 ```
+
+**The `policy` seam is the exception**, and it is worth knowing before you assume the shape
+above. A `Policy` ([`loom-plugin-linucb`](plugins/loom-plugin-linucb)) is consumed from *flow
+code*, never from the composition root:
+
+```ts
+import { decideWithPolicy } from "@loom/learning";
+
+const route = await decideWithPolicy(ctx, "route", policy, context, actions);
+```
+
+That is deliberate: the runtime never learns a policy exists, so a learned choice can only reach
+a run through `ctx.decide`, where it stays recorded, replayable and auditable. Everything else
+about authoring one is identical — same naming, same peer-dependency rule, same conformance
+requirement.
 
 ## Security (read this)
 
