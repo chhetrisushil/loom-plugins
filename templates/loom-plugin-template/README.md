@@ -2,7 +2,10 @@
 
 A starting point for a third-party [Loom](https://github.com/chhetrisushil/loom) plugin. This
 example implements a **store** backend and exports a `myStorage()` preset; the same shape works
-for any seam (dispatcher, telemetry, renderer, LLM provider, learned policy, …).
+for any seam. Run **`loom plugin seams`** for the authoritative list — it prints each seam's SPI,
+its conformance kit and the exact wiring line, from the seam registry rather than from prose that
+can fall behind it. (`policy` is the one seam consumed from *flow code* rather than
+`defineConfig`.)
 
 ## Use it
 

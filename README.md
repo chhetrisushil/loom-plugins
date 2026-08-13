@@ -11,13 +11,26 @@ plugins live in that repo under `plugins/` as `@loom/plugin-*`; the canonical pl
 
 ## What a Loom plugin is
 
-A package that contributes a concrete implementation of an existing Loom **seam** (a store,
-dispatcher, worker, telemetry adapter, renderer, LLM provider, protocol client, learned policy)
-and/or a **preset** — a pure function returning a `Partial<LoomConfig>` (or a singleton value like
-a `StorageConfig`). It is **statically imported** and, for every seam but one, passed to
+A package that contributes a concrete implementation of an existing Loom **seam** and/or a
+**preset** — a pure function returning a `Partial<LoomConfig>` (or a singleton value like a
+`StorageConfig`). It is **statically imported** and, for every seam but one, passed to
 `defineConfig`. There is no plugin runtime, no discovery, no hook bus, no lifecycle — using a
-plugin is always an explicit `import`
-plus one line of config.
+plugin is always an explicit `import` plus one line of config.
+
+**`loom plugin seams` is the authoritative list** — it prints each seam's SPI, whether a
+conformance kit exists, and the exact line that wires it, straight from the seam registry rather
+than from a copy in prose. Ten seams today:
+
+| Seam | Implements | Seam | Implements |
+| --- | --- | --- | --- |
+| `store` | `EventStore` (+ `SnapshotStore`, `BranchRegistry`) | `projection` | `ProjectionRuntime` |
+| `dispatcher` | `ExecutionDispatcher` | `worker` | `WorkerRuntime` |
+| `telemetry` | `TelemetryAdapter` | `llm` | `LlmProvider` |
+| `middleware` | `EffectMiddleware` | `authorizer` | `CapabilityAuthorizer` |
+| `timer` | `TimerStore` | `policy` | `Policy` (flow code, not `defineConfig`) |
+
+A *renderer* is not a seam — renderers consume the projection/surface output, and ship as ordinary
+packages.
 
 ### The contract
 
