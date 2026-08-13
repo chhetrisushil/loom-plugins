@@ -5,7 +5,8 @@
   "description": "Template for a third-party Loom store plugin \u2014 rename me to loom-plugin-<name>.",
   "keywords": [
     "loom",
-    "loom-plugin"
+    "loom-plugin",
+    "loom-store"
   ],
   "type": "commonjs",
   "main": "./dist/index.js",
