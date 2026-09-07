@@ -14,6 +14,7 @@ overrides:
   '@loom/learning': link:../loom/packages/learning
   '@loom/analytics': link:../loom/packages/analytics
   '@loom/reasoning': link:../loom/packages/reasoning
+  '@loom/memory': link:../loom/packages/memory
 
 importers:
 
@@ -27,6 +28,24 @@ importers:
       '@loom/learning':
         specifier: link:../../../loom/packages/learning
         version: link:../../../loom/packages/learning
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.9
+
+  plugins/loom-plugin-vector:
+    devDependencies:
+      '@loom/conformance':
+        specifier: link:../../../loom/packages/conformance
+        version: link:../../../loom/packages/conformance
+      '@loom/core':
+        specifier: link:../../../loom/packages/core
+        version: link:../../../loom/packages/core
+      '@loom/memory':
+        specifier: link:../../../loom/packages/memory
+        version: link:../../../loom/packages/memory
       typescript:
         specifier: ^5.6.3
         version: 5.9.3
