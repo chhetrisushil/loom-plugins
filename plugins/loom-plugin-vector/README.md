@@ -44,6 +44,12 @@ least-unrelated thing you have. The MemoryStore contract says a query that match
 nothing returns `[]`, so "matches" has to mean something, and for a vector store the
 only available meaning is a **floor**: `minScore`.
 
+`limit` is a different matter and not tunable: it goes through `@loom/memory`'s
+`clampSearchLimit`, which every backend must use. Passed through raw, a negative limit means
+`.slice(0, -1)` in an array-backed store and *no limit at all* on an SQL one — so the SPI fixed
+the meaning rather than leaving each backend to pick. The seam's own conformance kit caught this
+plugin the day that case was added.
+
 That floor is a property of your embedder, not of this package. The default of `0.1` is
 tuned for the built-in hashing embedder and is not portable to a real model — measure it
 against your own before trusting it. A test here pins both directions: a strict floor

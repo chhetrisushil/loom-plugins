@@ -1,5 +1,5 @@
 import type { MemoryEntry, MemorySearchOptions, MemoryStore } from "@loom/memory";
-import { searchableText, tokenize } from "@loom/memory";
+import { clampSearchLimit, searchableText, tokenize } from "@loom/memory";
 import { type Embedder, cosine, hashingEmbedder } from "./embed";
 
 export { hashingEmbedder, cosine, normalize } from "./embed";
@@ -100,6 +100,9 @@ export class VectorMemoryStore implements MemoryStore {
       .map((row, index) => ({ row, index, score: cosine(queryVector, row.vector) }))
       .filter((hit) => hit.score >= this.minScore);
     scored.sort((a, b) => b.score - a.score || b.index - a.index);
-    return scored.slice(0, opts.limit ?? 20).map((hit) => hit.row.entry);
+    // Through the shared clamp, like every other backend: raw, a negative limit means
+    // `.slice(0, -1)` here and NO LIMIT on an SQL backend, so the seam's own conformance
+    // kit caught this plugin the moment the case existed.
+    return scored.slice(0, clampSearchLimit(opts.limit)).map((hit) => hit.row.entry);
   }
 }
