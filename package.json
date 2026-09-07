@@ -20,7 +20,8 @@
       "@loom/testing": "link:../loom/tools/testing",
       "@loom/learning": "link:../loom/packages/learning",
       "@loom/analytics": "link:../loom/packages/analytics",
-      "@loom/reasoning": "link:../loom/packages/reasoning"
+      "@loom/reasoning": "link:../loom/packages/reasoning",
+      "@loom/memory": "link:../loom/packages/memory"
     }
   }
 }

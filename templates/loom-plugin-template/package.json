@@ -2,7 +2,7 @@
   "name": "loom-plugin-template",
   "version": "0.0.0",
   "private": true,
-  "description": "Template for a third-party Loom store plugin \u2014 rename me to loom-plugin-<name>.",
+  "description": "Template for a third-party Loom store plugin — rename me to loom-plugin-<name>.",
   "keywords": [
     "loom",
     "loom-plugin",
@@ -13,8 +13,9 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
