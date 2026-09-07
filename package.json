@@ -21,6 +21,7 @@
       "@loom/learning": "link:../loom/packages/learning",
       "@loom/analytics": "link:../loom/packages/analytics",
       "@loom/reasoning": "link:../loom/packages/reasoning",
+      "@loom/knowledge": "link:../loom/packages/knowledge",
       "@loom/memory": "link:../loom/packages/memory"
     }
   }

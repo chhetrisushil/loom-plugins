@@ -1,0 +1,42 @@
+{
+  "name": "loom-plugin-graph",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Knowledge-graph MemoryStore decorator for Loom — graph-expanded retrieval plus a traversal API, over any MemoryStore, with learned edges persisted in the store you already have.",
+  "keywords": [
+    "loom",
+    "loom-plugin",
+    "loom-memory",
+    "knowledge-graph",
+    "graphrag",
+    "retrieval"
+  ],
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "test": "vitest run",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
+  },
+  "peerDependencies": {
+    "@loom/core": "*",
+    "@loom/memory": "*"
+  },
+  "devDependencies": {
+    "@loom/conformance": "*",
+    "@loom/core": "*",
+    "@loom/knowledge": "*",
+    "@loom/memory": "*",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  },
+  "license": "Apache-2.0"
+}

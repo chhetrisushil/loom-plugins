@@ -96,5 +96,6 @@ implements, and a link). Listing is discovery, not endorsement.
 | Plugin | Seam | Description |
 |---|---|---|
 | [`loom-plugin-linucb`](plugins/loom-plugin-linucb) | `Policy` (`@loom/learning`) | LinUCB contextual bandit — picks per-observation, with honest ε-greedy propensities so the log stays evaluable |
+| [`loom-plugin-graph`](plugins/loom-plugin-graph) | `MemoryStore` (`@loom/memory`) | A knowledge graph over the seam — retrieval that expands from a match to its neighbours, plus traversal (`neighbours`/`subgraph`/`path`). A DECORATOR over the store you already have, because an edge an agent learned from feedback is not derived data the way an embedding index is |
 | [`loom-plugin-vector`](plugins/loom-plugin-vector) | `MemoryStore` (`@loom/memory`) | Retrieval by vector similarity with a pluggable `Embedder` — the unlike implementation of a seam whose only two backends were keyword indexes; passes the published conformance kit unmodified |
 | _(your plugin here)_ | | |
