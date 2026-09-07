@@ -19,7 +19,7 @@ plugin is always an explicit `import` plus one line of config.
 
 **`loom plugin seams` is the authoritative list** — it prints each seam's SPI, whether a
 conformance kit exists, and the exact line that wires it, straight from the seam registry rather
-than from a copy in prose. Ten seams today:
+than from a copy in prose. Eleven seams today:
 
 | Seam | Implements | Seam | Implements |
 | --- | --- | --- | --- |
@@ -27,7 +27,8 @@ than from a copy in prose. Ten seams today:
 | `dispatcher` | `ExecutionDispatcher` | `worker` | `WorkerRuntime` |
 | `telemetry` | `TelemetryAdapter` | `llm` | `LlmProvider` |
 | `middleware` | `EffectMiddleware` | `authorizer` | `CapabilityAuthorizer` |
-| `timer` | `TimerStore` | `policy` | `Policy` (flow code, not `defineConfig`) |
+| `timer` | `TimerStore` | `memory` | `MemoryStore` (agent memory + a corpus) |
+| `policy` | `Policy` (flow code, not `defineConfig`) | | |
 
 A *renderer* is not a seam — renderers consume the projection/surface output, and ship as ordinary
 packages.
