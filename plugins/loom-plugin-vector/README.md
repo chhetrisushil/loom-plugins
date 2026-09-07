@@ -68,6 +68,21 @@ hand-authored toy embedder matching a passage that shares *no words* with the qu
 default failing exactly that case. If the second ever starts passing, this README has
 become a lie and the test says so.
 
+## `remove` is where a similarity backend differs most from a keyword one
+
+`MemoryStore.remove(key, ids)` (SPI 2.0.0) is optional, and the runtime falls back to
+read-filter-`replace` when a backend omits it. That fallback is correct everywhere and
+uniquely expensive *here*: `replace` re-indexes the list it is given, so on this store
+deleting one document's passages would re-embed every surviving passage in the corpus.
+Implementing `remove` drops the survivors' vectors untouched — one embedding call instead
+of a hundred thousand — which is the same reason the SQL backends implement it as one
+indexed `DELETE` rather than a rewrite.
+
+The conformance kit's six `remove` cases run against this store unmodified, including the
+one a similarity backend is most likely to get wrong: a removed entry must leave the
+*index*, not merely the rows. Here they are the same map, so it is free; in a real vector
+database they are not.
+
 ## Persistence
 
 Entries and vectors live in memory. An embedding is derived data — losing it is a

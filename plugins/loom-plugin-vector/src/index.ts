@@ -80,6 +80,29 @@ export class VectorMemoryStore implements MemoryStore {
   }
 
   /**
+   * OPTIONAL: delete by entry id, keeping the survivors in append order.
+   *
+   * Cheap here for the same reason it is cheap in an inverted index and expensive in a
+   * naive one: the vectors of the entries that stay are untouched, so a document revised
+   * in a corpus of 100,000 passages re-embeds its own passages and nothing else. Without
+   * this the runtime rewrites the whole key through `replace` above — which, on THIS
+   * backend, re-embeds every surviving entry. The fallback is correct, and it is the
+   * difference between one embedding call and a hundred thousand.
+   */
+  async remove(key: string, ids: readonly string[]): Promise<void> {
+    if (ids.length === 0) return;
+    const rows = this.entries.get(key);
+    if (rows === undefined) return;
+    const doomed = new Set(ids);
+    // `row.entry.id === undefined` first: an entry with no id must never match, and a
+    // Set lookup would happily succeed if `undefined` were ever passed in as an id.
+    const kept = rows.filter((row) => row.entry.id === undefined || !doomed.has(row.entry.id));
+    if (kept.length === rows.length) return;
+    if (kept.length === 0) this.entries.delete(key);
+    else this.entries.set(key, kept);
+  }
+
+  /**
    * OPTIONAL: relevance retrieval, best first.
    *
    * Ranked by cosine similarity and cut at {@link VectorMemoryStoreOptions.minScore}.
