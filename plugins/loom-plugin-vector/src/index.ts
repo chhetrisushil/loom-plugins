@@ -38,9 +38,16 @@ interface Indexed {
  * an inverted index.
  *
  * It is not: the store indexes `searchableText(entry)` and rejects term-less
- * queries with `tokenize`, exactly as the SQLite and Postgres backends do, and
- * then answers with cosine similarity over embeddings instead of BM25 over an
- * inverted index. The published `runMemoryStoreConformance` passes unchanged.
+ * queries with `tokenize`, and then answers with cosine similarity over embeddings
+ * instead of BM25 over an inverted index. The published `runMemoryStoreConformance`
+ * passes unchanged.
+ *
+ * SPI 2.1.0 bounds the query for TERM-BASED backends — `queryTerms` deduplicates and
+ * caps, because OR-ing one word 20,000 times cannot change which rows match and cost
+ * SQLite 32.7 seconds to say so. This store is the carve-out that clause names, and
+ * deliberately does not adopt it: it derives no terms to OR, and truncating a question
+ * would move it in embedding space rather than shorten a boolean expression. The whole
+ * query is embedded, at a cost linear in its length.
  *
  * Entries and vectors are held in memory: an embedding is derived data, and
  * rebuilding it is a re-embed, not a recovery problem. Persist by pairing this
