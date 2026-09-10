@@ -36,6 +36,15 @@ answers with cosine similarity over embeddings rather than BM25 over an inverted
 **`runMemoryStoreConformance` passes unmodified**, which is the result the package was
 written to produce: the seam is a contract, not a shape.
 
+SPI **2.1.0** added the other half of that contract and, in doing so, named this store as
+its exception: a *term-based* backend must derive its terms with `queryTerms`, which
+deduplicates and caps them, because OR-ing one word 20,000 times cannot change which rows
+match and cost SQLite 32.7 seconds to say so. A similarity backend derives no terms to OR,
+and truncating a question would move it in embedding space rather than shorten a boolean
+expression — so this one embeds the whole query, at a cost linear in its length. The clause
+exists because the seam has an implementation unlike the others; this is that implementation
+reading it back.
+
 ## The one thing a similarity backend must decide
 
 Cosine similarity is defined against *every* stored entry. Ranked and unthresholded,
@@ -70,7 +79,7 @@ become a lie and the test says so.
 
 ## `remove` is where a similarity backend differs most from a keyword one
 
-`MemoryStore.remove(key, ids)` (SPI 2.0.0) is optional, and the runtime falls back to
+`MemoryStore.remove(key, ids)` (SPI 2.1.0) is optional, and the runtime falls back to
 read-filter-`replace` when a backend omits it. That fallback is correct everywhere and
 uniquely expensive *here*: `replace` re-indexes the list it is given, so on this store
 deleting one document's passages would re-embed every surviving passage in the corpus.
