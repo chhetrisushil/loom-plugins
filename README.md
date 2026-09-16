@@ -19,7 +19,8 @@ plugin is always an explicit `import` plus one line of config.
 
 **`loom plugin seams` is the authoritative list** — it prints each seam's SPI, whether a
 conformance kit exists, and the exact line that wires it, straight from the seam registry rather
-than from a copy in prose. Eleven seams today:
+than from a copy in prose — run it rather than trusting the table below, which is a copy in
+prose. **Nineteen seams today**, one for every SPI that publishes a conformance kit:
 
 | Seam | Implements | Seam | Implements |
 | --- | --- | --- | --- |
@@ -28,6 +29,10 @@ than from a copy in prose. Eleven seams today:
 | `telemetry` | `TelemetryAdapter` | `llm` | `LlmProvider` |
 | `middleware` | `EffectMiddleware` | `authorizer` | `CapabilityAuthorizer` |
 | `timer` | `TimerStore` | `memory` | `MemoryStore` (agent memory + a corpus) |
+| `lease` | `LeaseStore` (ownership before a wake) | `content` | `ContentStore` (claim-check blobs) |
+| `durable-state` | `DurableStateStore` (carry state) | `read-model` | `ReadModelStore` (cross-execution queries) |
+| `keystore` | `KeyStore` (K10 crypto-shredding) | `execution-authorizer` | `ExecutionAuthorizer` (lifecycle) |
+| `resume-authenticator` | `ResumeAuthenticator` (re-entry) | `timer-dispatcher` | `TimerDispatcher` (where a wake runs) |
 | `policy` | `Policy` (flow code, not `defineConfig`) | | |
 
 A *renderer* is not a seam — renderers consume the projection/surface output, and ship as ordinary
@@ -99,4 +104,5 @@ implements, and a link). Listing is discovery, not endorsement.
 | [`loom-plugin-linucb`](plugins/loom-plugin-linucb) | `Policy` (`@loom/learning`) | LinUCB contextual bandit — picks per-observation, with honest ε-greedy propensities so the log stays evaluable |
 | [`loom-plugin-graph`](plugins/loom-plugin-graph) | `MemoryStore` (`@loom/memory`) | A knowledge graph over the seam — retrieval that expands from a match to its neighbours, plus traversal (`neighbours`/`subgraph`/`path`). A DECORATOR over the store you already have, because an edge an agent learned from feedback is not derived data the way an embedding index is |
 | [`loom-plugin-vector`](plugins/loom-plugin-vector) | `MemoryStore` (`@loom/memory`) | Retrieval by vector similarity with a pluggable `Embedder` — the unlike implementation of a seam whose only two backends were keyword indexes; passes the published conformance kit unmodified |
+| [`loom-plugin-kms`](plugins/loom-plugin-kms) | `KeyStore` (`@loom/plugin-crypto`) | Durable keys for K10 crypto-shredding via envelope encryption — AWS KMS over SigV4 with no SDK, or a master key you hold. Erasure deletes the wrapped key rather than scheduling a KMS deletion, because a 7–30 day window is not what `destroy()` promises |
 | _(your plugin here)_ | | |

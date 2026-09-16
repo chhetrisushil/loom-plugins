@@ -12,17 +12,18 @@
   },
   "pnpm": {
     "overrides": {
+      "@loom/analytics": "link:../loom/packages/analytics",
+      "@loom/conformance": "link:../loom/packages/conformance",
       "@loom/core": "link:../loom/packages/core",
       "@loom/event-runtime": "link:../loom/packages/event-runtime",
-      "@loom/snapshot-runtime": "link:../loom/packages/snapshot-runtime",
-      "@loom/conformance": "link:../loom/packages/conformance",
-      "@loom/plugin-kit": "link:../loom/packages/plugin-kit",
-      "@loom/testing": "link:../loom/tools/testing",
-      "@loom/learning": "link:../loom/packages/learning",
-      "@loom/analytics": "link:../loom/packages/analytics",
-      "@loom/reasoning": "link:../loom/packages/reasoning",
       "@loom/knowledge": "link:../loom/packages/knowledge",
-      "@loom/memory": "link:../loom/packages/memory"
+      "@loom/learning": "link:../loom/packages/learning",
+      "@loom/memory": "link:../loom/packages/memory",
+      "@loom/plugin-crypto": "link:../loom/plugins/crypto",
+      "@loom/plugin-kit": "link:../loom/packages/plugin-kit",
+      "@loom/reasoning": "link:../loom/packages/reasoning",
+      "@loom/snapshot-runtime": "link:../loom/packages/snapshot-runtime",
+      "@loom/testing": "link:../loom/tools/testing"
     }
   }
 }

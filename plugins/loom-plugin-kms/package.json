@@ -1,0 +1,40 @@
+{
+  "name": "loom-plugin-kms",
+  "version": "0.0.0",
+  "private": false,
+  "description": "A Loom keystore plugin \u2014 Per-subject encryption keys (K10 crypto-shredding).",
+  "keywords": [
+    "loom",
+    "loom-plugin",
+    "loom-keystore"
+  ],
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "test": "vitest run",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
+  },
+  "peerDependencies": {
+    "@loom/core": "*",
+    "@loom/plugin-crypto": "*"
+  },
+  "devDependencies": {
+    "@loom/conformance": "*",
+    "@loom/core": "*",
+    "@loom/plugin-crypto": "*",
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/node": "^22.0.0",
+    "better-sqlite3": "^11.0.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}
