@@ -100,6 +100,14 @@ export class KmsKeyStore implements KeyStore {
     await this.store.destroy(subjectId);
   }
 
+  /**
+   * Proof of destruction (loom ADR 0130): true only once THIS store's tombstone records the
+   * subject. An erasure retry that finds the key gone accepts it as destroyed only on `true`.
+   */
+  async wasDestroyed(subjectId: string): Promise<boolean> {
+    return this.store.isDestroyed(subjectId);
+  }
+
   async close(): Promise<void> {
     await this.store.close?.();
   }
