@@ -66,6 +66,25 @@ describe("erasure", () => {
     expect(await tomorrow.get("subject-1")).toBeNull();
   });
 
+  it("proves the destruction across a restart (wasDestroyed), and never for a live or unknown subject", async () => {
+    // loom ADR 0130: an erasure retry that finds the key gone trusts it as destroyed only on
+    // this proof — a node that merely never had the key must not answer true.
+    const store = new SqliteWrappedKeyStore(new Database(":memory:"));
+    const wrapper = master();
+    const today = new KmsKeyStore({ wrapper, store });
+    await today.getOrCreate("live");
+    await today.getOrCreate("gone");
+    await today.destroy("gone");
+
+    const tomorrow = new KmsKeyStore({ wrapper, store });
+    expect(await tomorrow.wasDestroyed("gone")).toBe(true);
+    expect(await tomorrow.wasDestroyed("live")).toBe(false);
+    expect(await tomorrow.wasDestroyed("never-minted")).toBe(false);
+    // A different store (another node's empty key store) has no proof for the same subject.
+    const elsewhere = new KmsKeyStore({ wrapper, store: new SqliteWrappedKeyStore(new Database(":memory:")) });
+    expect(await elsewhere.wasDestroyed("gone")).toBe(false);
+  });
+
   it("does not ask the KMS to delete anything", async () => {
     // Erasure must not depend on a KMS deletion window — and must not take out every other
     // subject wrapped under the same key.
