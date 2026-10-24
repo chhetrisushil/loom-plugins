@@ -1,5 +1,7 @@
 # loom-plugins
 
+> **Disclaimer:** The idea behind loom-plugins is mine (Sushil Chhetri), but the codebase is vibe coded using Claude ([Claude Code](https://claude.com/claude-code)).
+
 Community home for **third-party (3P) Loom plugins** — and the reference template for writing
 your own. You do **not** have to host your plugin here: a Loom plugin is just a package you
 publish under any name/scope; this repo is the curated, discoverable index plus a starting point.
