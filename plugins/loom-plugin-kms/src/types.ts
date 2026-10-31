@@ -45,7 +45,19 @@ export interface WrappedKey {
  */
 export interface WrappedKeyStore {
   read(subjectId: string): Promise<WrappedKey | null>;
+  /**
+   * Upsert: replaces any existing row. For re-wrap / rotation ONLY - never for minting a key,
+   * because two callers each writing a candidate leave one holding a key nothing can find.
+   */
   write(subjectId: string, key: WrappedKey): Promise<void>;
+  /**
+   * ATOMIC create-if-absent (loom ADR 0139 D22). Insert `key` ONLY if the subject has no row AND
+   * no tombstone, as ONE operation across every caller and node sharing the store (SQLite:
+   * `INSERT ... WHERE NOT EXISTS (tombstone) ON CONFLICT DO NOTHING`; SQL/DynamoDB: a conditional
+   * write). Resolves `true` if THIS call inserted, `false` if a row already existed or the subject
+   * was destroyed. MUST NOT be implemented as `read` then `write`.
+   */
+  insertIfAbsent(subjectId: string, key: WrappedKey): Promise<boolean>;
   /** Delete the wrapped key AND record that this subject was erased. Idempotent. */
   destroy(subjectId: string): Promise<void>;
   /** Was this subject erased? Distinguishes "never existed" from "shredded". */

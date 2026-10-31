@@ -1,4 +1,7 @@
 import { randomBytes } from "node:crypto";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import Database from "better-sqlite3";
 import { runKeyStoreConformance } from "@loom/conformance";
 import { describe, expect, it } from "vitest";
@@ -34,6 +37,67 @@ describe("durability is inherited, never asserted", () => {
   it("reports true when they live in SQLite", () => {
     const keys = new KmsKeyStore({ wrapper: master(), store: new SqliteWrappedKeyStore(new Database(":memory:")) });
     expect(keys.durable).toBe(true);
+  });
+});
+
+describe("getOrCreate is an atomic create-if-absent (loom ADR 0139 D22)", () => {
+  const backings: Array<[string, () => InstanceType<typeof InMemoryWrappedKeyStore> | InstanceType<typeof SqliteWrappedKeyStore>]> = [
+    ["in-memory", () => new InMemoryWrappedKeyStore()],
+    ["sqlite", () => new SqliteWrappedKeyStore(new Database(":memory:"))],
+  ];
+  for (const [name, mk] of backings) {
+    it(`concurrent callers on one instance resolve to ONE key (${name})`, async () => {
+      const keys = new KmsKeyStore({ wrapper: master(), store: mk() });
+      const got = await Promise.all(Array.from({ length: 16 }, () => keys.getOrCreate("s")));
+      for (const k of got) expect(Buffer.compare(k, got[0] as Buffer)).toBe(0);
+      expect(Buffer.compare((await keys.get("s")) as Buffer, got[0] as Buffer)).toBe(0);
+    });
+
+    it(`two nodes over one backing store resolve to ONE key (${name})`, async () => {
+      const store = mk();
+      const wrapper = master();
+      const a = new KmsKeyStore({ wrapper, store });
+      const b = new KmsKeyStore({ wrapper, store });
+      const [ka, kb, kc] = await Promise.all([a.getOrCreate("s"), b.getOrCreate("s"), a.getOrCreate("s")]);
+      expect(Buffer.compare(ka, kb)).toBe(0);
+      expect(Buffer.compare(ka, kc)).toBe(0);
+    });
+
+    it(`a racing getOrCreate cannot resurrect a destroyed subject (${name})`, async () => {
+      const keys = new KmsKeyStore({ wrapper: master(), store: mk() });
+      await keys.getOrCreate("s");
+      await keys.destroy("s");
+      await expect(Promise.all([keys.getOrCreate("s"), keys.getOrCreate("s")])).rejects.toThrow(/destroyed/);
+      expect(await keys.get("s")).toBeNull();
+    });
+  }
+
+  it("two SQLite connections to one file converge on one key", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "kms-"));
+    try {
+      const file = join(dir, "keys.db");
+      const wrapper = master();
+      const a = new KmsKeyStore({ wrapper, store: new SqliteWrappedKeyStore(new Database(file)) });
+      const b = new KmsKeyStore({ wrapper, store: new SqliteWrappedKeyStore(new Database(file)) });
+      const [ka, kb] = await Promise.all([a.getOrCreate("s"), b.getOrCreate("s")]);
+      expect(Buffer.compare(ka, kb)).toBe(0);
+      await a.close();
+      await b.close();
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("insertIfAbsent refuses an existing row and a tombstone, and never overwrites", async () => {
+    for (const store of [new InMemoryWrappedKeyStore(), new SqliteWrappedKeyStore(new Database(":memory:"))]) {
+      const row = (b: string) => ({ sealed: Buffer.from(b), keyId: "k", createdAt: 1 });
+      expect(await store.insertIfAbsent("s", row("first"))).toBe(true);
+      expect(await store.insertIfAbsent("s", row("second"))).toBe(false);
+      expect(((await store.read("s")) as { sealed: Buffer }).sealed.toString()).toBe("first");
+      await store.destroy("s");
+      expect(await store.insertIfAbsent("s", row("third"))).toBe(false);
+      expect(await store.read("s")).toBeNull();
+    }
   });
 });
 

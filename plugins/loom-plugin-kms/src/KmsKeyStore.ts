@@ -58,24 +58,33 @@ export class KmsKeyStore implements KeyStore {
     const existing = await this.get(subjectId);
     if (existing !== null) return existing;
 
-    // The erasure invariant: a shredded subject must never get a fresh key, or the next write
-    // touching it quietly undoes the shredding. Refusing loudly beats returning something the
-    // caller would then encrypt new data under.
+    // Atomic create-if-absent (loom ADR 0139 D22): concurrent callers on any node must all resolve
+    // to ONE key, or an erasure destroys one copy and misses the other. So never get -> write:
+    // wrap a candidate, insert it conditionally (no row AND no tombstone, in one operation), then
+    // re-read the winner. A loser discards its candidate and returns the winner's key.
+    const dataKey = randomBytes(DATA_KEY_BYTES);
+    const sealed = await this.wrapper.wrap(dataKey);
+    const inserted = await this.store.insertIfAbsent(subjectId, {
+      sealed,
+      keyId: this.wrapper.keyId,
+      createdAt: Date.now(),
+    });
+    if (inserted) return dataKey;
+
+    const winner = await this.get(subjectId);
+    if (winner !== null) return winner;
+
+    // No row and the insert refused: the subject was shredded. The erasure invariant - a shredded
+    // subject must never get a fresh key, or the next write undoes the shredding.
     if (await this.store.isDestroyed(subjectId)) {
       throw new Error(
         `key for subject "${subjectId}" was destroyed (shredded); cannot recreate — ` +
           "everything encrypted under it is unreadable by design"
       );
     }
-
-    const dataKey = randomBytes(DATA_KEY_BYTES);
-    const sealed = await this.wrapper.wrap(dataKey);
-    await this.store.write(subjectId, {
-      sealed,
-      keyId: this.wrapper.keyId,
-      createdAt: Date.now(),
-    });
-    return dataKey;
+    throw new Error(
+      `could not create a key for subject "${subjectId}": insert refused but no row or tombstone found`
+    );
   }
 
   async get(subjectId: string): Promise<Buffer | null> {

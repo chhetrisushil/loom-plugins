@@ -21,6 +21,13 @@ export class InMemoryWrappedKeyStore implements WrappedKeyStore {
     return Promise.resolve();
   }
 
+  insertIfAbsent(subjectId: string, key: WrappedKey): Promise<boolean> {
+    // No await between the check and the set (single-threaded): atomic.
+    if (this.rows.has(subjectId) || this.tombstones.has(subjectId)) return Promise.resolve(false);
+    this.rows.set(subjectId, key);
+    return Promise.resolve(true);
+  }
+
   destroy(subjectId: string): Promise<void> {
     this.rows.delete(subjectId);
     this.tombstones.add(subjectId);
@@ -102,6 +109,20 @@ export class SqliteWrappedKeyStore implements WrappedKeyStore {
       )
       .run(subjectId, key.sealed, key.keyId, key.createdAt);
     return Promise.resolve();
+  }
+
+  insertIfAbsent(subjectId: string, key: WrappedKey): Promise<boolean> {
+    // One statement, so it is atomic across connections/processes sharing the file: inserts only
+    // when there is no tombstone, and a concurrent row for the subject makes it a no-op.
+    const res = this.db
+      .prepare(
+        `INSERT INTO wrapped_keys (subject_id, sealed, key_id, created_at)
+           SELECT ?, ?, ?, ?
+           WHERE NOT EXISTS (SELECT 1 FROM shredded_subjects WHERE subject_id = ?)
+           ON CONFLICT(subject_id) DO NOTHING`
+      )
+      .run(subjectId, key.sealed, key.keyId, key.createdAt, subjectId) as { changes?: number };
+    return Promise.resolve((res.changes ?? 0) > 0);
   }
 
   destroy(subjectId: string): Promise<void> {
