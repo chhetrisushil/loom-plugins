@@ -19,7 +19,10 @@
  * defineConfig({
  *   storage: { kind: "custom",
  *     eventStore: new EncryptingEventStore(inner, keys, { sensitive: { … } }),
- *     snapshotStore },
+ *     snapshotStore,
+ *     // Compaction archives what it removes (loom ADR 0138). Seal the archive with the SAME
+ *     // KeyStore so crypto-shredding a subject also erases its archived history.
+ *     archiveStore: new EncryptingArchiveStore(new SqliteArchiveStore("./archive.db"), keys) },
  * });
  * ```
  */
