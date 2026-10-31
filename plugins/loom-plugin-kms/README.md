@@ -16,7 +16,8 @@ pnpm add loom-plugin-kms better-sqlite3
 
 ```ts
 import Database from "better-sqlite3";
-import { EncryptingEventStore } from "@loom/plugin-crypto";
+import { EncryptingArchiveStore, EncryptingEventStore } from "@loom/plugin-crypto";
+import { SqliteArchiveStore } from "@loom/plugin-sqlite";
 import { AwsKmsWrapper, KmsKeyStore, SqliteWrappedKeyStore } from "loom-plugin-kms";
 
 const keys = new KmsKeyStore({
@@ -35,6 +36,9 @@ defineConfig({
       sensitive: { STEP_COMPLETED: ["output.ssn"] },
     }),
     snapshotStore,
+    // Compaction archives what it removes (loom ADR 0138). Seal the archive with the
+    // SAME KeyStore so crypto-shredding a subject also erases its archived history.
+    archiveStore: new EncryptingArchiveStore(new SqliteArchiveStore("./archive.db"), keys),
   },
 });
 ```
