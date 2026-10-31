@@ -93,7 +93,7 @@ class MyWrapper implements KeyWrapper {
 }
 ```
 
-Same for storage: `WrappedKeyStore` is four methods plus a `durable` declaration, so Postgres
+Same for storage: `WrappedKeyStore` is five methods (`read`, `write`, `insertIfAbsent`, `destroy`, `isDestroyed`) plus a `durable` declaration (`insertIfAbsent` must be a conditional write, never read-then-write), so Postgres
 or DynamoDB is a short class too.
 
 ## Operating it
