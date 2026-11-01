@@ -22,11 +22,11 @@ plugin is always an explicit `import` plus one line of config.
 **`loom plugin seams` is the authoritative list** — it prints each seam's SPI, whether a
 conformance kit exists, and the exact line that wires it, straight from the seam registry rather
 than from a copy in prose — run it rather than trusting the table below, which is a copy in
-prose. **Nineteen seams today**, one for every SPI that publishes a conformance kit:
+prose. **Twenty seams today**, one for every SPI that publishes a conformance kit:
 
 | Seam | Implements | Seam | Implements |
 | --- | --- | --- | --- |
-| `store` | `EventStore` (+ `SnapshotStore`, `BranchRegistry`) | `projection` | `ProjectionRuntime` |
+| `store` | `EventStore` (+ `SnapshotStore`, `ArchiveStore`, `BranchRegistry`) | `projection` | `ProjectionRuntime` |
 | `dispatcher` | `ExecutionDispatcher` | `worker` | `WorkerRuntime` |
 | `telemetry` | `TelemetryAdapter` | `llm` | `LlmProvider` |
 | `middleware` | `EffectMiddleware` | `authorizer` | `CapabilityAuthorizer` |
@@ -35,7 +35,7 @@ prose. **Nineteen seams today**, one for every SPI that publishes a conformance 
 | `durable-state` | `DurableStateStore` (carry state) | `read-model` | `ReadModelStore` (cross-execution queries) |
 | `keystore` | `KeyStore` (K10 crypto-shredding) | `execution-authorizer` | `ExecutionAuthorizer` (lifecycle) |
 | `resume-authenticator` | `ResumeAuthenticator` (re-entry) | `timer-dispatcher` | `TimerDispatcher` (where a wake runs) |
-| `policy` | `Policy` (flow code, not `defineConfig`) | | |
+| `policy` | `Policy` (flow code, not `defineConfig`) | `sandbox` | `SandboxBackend` (model-written code; flow code, not `defineConfig`) |
 
 A *renderer* is not a seam — renderers consume the projection/surface output, and ship as ordinary
 packages.
