@@ -22,6 +22,7 @@
       "@loom/plugin-crypto": "link:../loom/plugins/crypto",
       "@loom/plugin-kit": "link:../loom/packages/plugin-kit",
       "@loom/reasoning": "link:../loom/packages/reasoning",
+      "@loom/sandbox": "link:../loom/packages/sandbox",
       "@loom/snapshot-runtime": "link:../loom/packages/snapshot-runtime",
       "@loom/testing": "link:../loom/tools/testing"
     }
