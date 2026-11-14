@@ -3,3 +3,7 @@ dist/
 *.tsbuildinfo
 .turbo/
 .DS_Store
+
+# copied in by scripts/publish.mjs for the duration of a pack
+plugins/*/LICENSE
+plugins/*/NOTICE
