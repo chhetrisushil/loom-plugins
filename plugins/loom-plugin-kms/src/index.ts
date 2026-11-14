@@ -1,5 +1,5 @@
 /**
- * `loom-plugin-kms` — a durable `KeyStore` for Loom's K10 crypto-shredding.
+ * `@loomwork/plugin-kms` — a durable `KeyStore` for Loom's K10 crypto-shredding.
  *
  * Envelope encryption: one data key per subject, sealed by a KMS (or a master key you hold)
  * and stored as ciphertext. Erasure deletes the only copy of the sealed key — immediate, and
@@ -7,8 +7,8 @@
  *
  * ```ts
  * import Database from "better-sqlite3";
- * import { KmsKeyStore, AwsKmsWrapper, SqliteWrappedKeyStore } from "loom-plugin-kms";
- * import { EncryptingEventStore } from "@loom/plugin-crypto";
+ * import { KmsKeyStore, AwsKmsWrapper, SqliteWrappedKeyStore } from "@loomwork/plugin-kms";
+ * import { EncryptingEventStore } from "@loomwork/plugin-crypto";
  *
  * const keys = new KmsKeyStore({
  *   wrapper: new AwsKmsWrapper({ keyId: process.env.KMS_KEY_ARN!, region: "eu-west-1",

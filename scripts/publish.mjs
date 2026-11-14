@@ -6,7 +6,7 @@
 //
 // Refused unless the git tree is clean and every public plugin is built (`dist/` present). The root
 // LICENSE and NOTICE are copied into each plugin for the pack and removed afterwards (git-ignored).
-// Publish AFTER the @loom/* versions the plugins' peer ranges name are on the registry.
+// Publish AFTER the @loomwork/* versions the plugins' peer ranges name are on the registry.
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";

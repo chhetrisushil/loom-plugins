@@ -1,9 +1,9 @@
-# loom-plugin-cloudrun-sandbox
+# @loomwork/plugin-cloudrun-sandbox
 
 A third-party Loom **sandbox backend** (`SandboxBackend`, [ADR 0144](https://github.com/chhetrisushil/loom/blob/main/docs/adr/0144-sandbox-backend-spi.md))
 that runs **model-written Python** on **Google Cloud Run**. It has two halves:
 
-- `CloudRunSandboxBackend`, a TypeScript client. `SandboxEffect` (`@loom/sandbox`) owns the input and
+- `CloudRunSandboxBackend`, a TypeScript client. `SandboxEffect` (`@loomwork/sandbox`) owns the input and
   output ceilings, the content-address check, the `scriptError` / `limitExceeded` / `shapeMismatch`
   channels, bounded error text, cancellation and the replay form of the result; this client only
   POSTs one request and maps the answer to a `SandboxOutcome`.
@@ -18,10 +18,10 @@ promise about it.
 ## Install
 
 ```sh
-pnpm add loom-plugin-cloudrun-sandbox @loom/sandbox
+pnpm add @loomwork/plugin-cloudrun-sandbox @loomwork/sandbox
 ```
 
-Node 20.3 or newer (it uses `AbortSignal.any`). The only runtime dependency is `@loom/sandbox`, a peer, so
+Node 20.3 or newer (it uses `AbortSignal.any`). The only runtime dependency is `@loomwork/sandbox`, a peer, so
 there is one copy of the SPI. It does **not** depend on `google-auth-library`: authentication is a
 function you pass in (below).
 
@@ -30,8 +30,8 @@ function you pass in (below).
 The sandbox is consumed from flow code, like a `Policy`, not from `defineConfig`.
 
 ```ts
-import { registerSandboxBackend } from "@loom/sandbox";
-import { CloudRunSandboxBackend } from "loom-plugin-cloudrun-sandbox";
+import { registerSandboxBackend } from "@loomwork/sandbox";
+import { CloudRunSandboxBackend } from "@loomwork/plugin-cloudrun-sandbox";
 
 const backend = new CloudRunSandboxBackend({
   url: "https://loom-sandbox-abc123-ew.a.run.app/",
@@ -110,7 +110,7 @@ conformance kit against the DEPLOYED url with the claim, and keep it only if it 
 ```sh
 LOOM_CLOUDRUN_SANDBOX_URL=https://… LOOM_CLOUDRUN_SANDBOX_TOKEN=… \
 LOOM_CLOUDRUN_SANDBOX_EGRESS=blocked LOOM_CLOUDRUN_SANDBOX_FRESH=1 \
-  pnpm --filter loom-plugin-cloudrun-sandbox exec vitest run src/live.test.ts
+  pnpm --filter @loomwork/plugin-cloudrun-sandbox exec vitest run src/live.test.ts
 ```
 
 The kit passes the effect `allowNetwork` / `allowReusedEnvironment` exactly when the declaration needs
@@ -119,8 +119,8 @@ image or the flags change. `PYTHON_FIXTURES` (exported) is the kit's fixture set
 convention; use it for your own deployment tests:
 
 ```ts
-import { runSandboxBackendConformance } from "@loom/conformance";
-import { CloudRunSandboxBackend, PYTHON_FIXTURES } from "loom-plugin-cloudrun-sandbox";
+import { runSandboxBackendConformance } from "@loomwork/conformance";
+import { CloudRunSandboxBackend, PYTHON_FIXTURES } from "@loomwork/plugin-cloudrun-sandbox";
 
 runSandboxBackendConformance(() => new CloudRunSandboxBackend({ url, deployment }), {
   fixtures: PYTHON_FIXTURES,

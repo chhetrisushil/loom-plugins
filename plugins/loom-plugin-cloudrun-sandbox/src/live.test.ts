@@ -1,4 +1,4 @@
-import { runSandboxBackendConformance } from "@loom/conformance";
+import { runSandboxBackendConformance } from "@loomwork/conformance";
 import { describe } from "vitest";
 import { CloudRunSandboxBackend } from "./index";
 import { PYTHON_FIXTURES } from "./fixtures";

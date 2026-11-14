@@ -1,4 +1,4 @@
-import { tokenize } from "@loom/memory";
+import { tokenize } from "@loomwork/memory";
 
 /**
  * Turn text into a dense vector. THE seam of this plugin — swap in a real model

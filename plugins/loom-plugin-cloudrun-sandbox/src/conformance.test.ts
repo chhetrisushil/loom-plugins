@@ -1,4 +1,4 @@
-import { runSandboxBackendConformance } from "@loom/conformance";
+import { runSandboxBackendConformance } from "@loomwork/conformance";
 import { afterAll, beforeAll, describe } from "vitest";
 import { MEMORY_ENFORCED, findPython, startRunner, type LocalRunner } from "../test/util";
 import { CloudRunSandboxBackend } from "./index";

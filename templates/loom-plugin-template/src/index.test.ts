@@ -6,7 +6,7 @@
 // import {
 //   runEventStoreConformance,
 //   runSnapshotStoreConformance,
-// } from "@loom/conformance";
+// } from "@loomwork/conformance";
 // import { MyEventStore, MySnapshotStore } from "./index";
 //
 // runEventStoreConformance(() => new MyEventStore(":memory:"));

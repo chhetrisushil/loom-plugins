@@ -1,11 +1,11 @@
-# loom-plugin-vector
+# @loomwork/plugin-vector
 
 A `MemoryStore` for [Loom](https://github.com/chhetrisushil/loom) that retrieves by
 **vector similarity** instead of by keyword match, with the embedder as a parameter.
 
 ```ts
-import { VectorMemoryStore } from "loom-plugin-vector";
-import { defineConfig } from "@loom/app";
+import { VectorMemoryStore } from "@loomwork/plugin-vector";
+import { defineConfig } from "@loomwork/app";
 
 defineConfig({
   memoryStore: new VectorMemoryStore({
@@ -53,7 +53,7 @@ least-unrelated thing you have. The MemoryStore contract says a query that match
 nothing returns `[]`, so "matches" has to mean something, and for a vector store the
 only available meaning is a **floor**: `minScore`.
 
-`limit` is a different matter and not tunable: it goes through `@loom/memory`'s
+`limit` is a different matter and not tunable: it goes through `@loomwork/memory`'s
 `clampSearchLimit`, which every backend must use. Passed through raw, a negative limit means
 `.slice(0, -1)` in an array-backed store and *no limit at all* on an SQL one — so the SPI fixed
 the meaning rather than leaving each backend to pick. The seam's own conformance kit caught this
@@ -95,7 +95,7 @@ database they are not.
 ## Persistence
 
 Entries and vectors live in memory. An embedding is derived data — losing it is a
-re-embed, not a recovery problem — and `@loom/memory` is deliberately separate from the
+re-embed, not a recovery problem — and `@loomwork/memory` is deliberately separate from the
 durable event log. For a durable corpus, back it with a real vector database: the cosine
 loop in `search` is what such an index does faster, not differently.
 

@@ -7,7 +7,7 @@ your own. You do **not** have to host your plugin here: a Loom plugin is just a 
 publish under any name/scope; this repo is the curated, discoverable index plus a starting point.
 
 For the framework itself, see [loom](https://github.com/chhetrisushil/loom). First-party (1P)
-plugins live in that repo under `plugins/` as `@loom/plugin-*`; the canonical plugin docs are
+plugins live in that repo under `plugins/` as `@loomwork/plugin-*`; the canonical plugin docs are
 [`docs/plugins.md`](https://github.com/chhetrisushil/loom/blob/main/docs/plugins.md) and
 [ADR 0043](https://github.com/chhetrisushil/loom/blob/main/docs/adr/0043-plugin-packaging-and-1p-3p-separation.md).
 
@@ -47,7 +47,7 @@ packages.
 3. contribute only to **existing seams** — never a kernel hook, never a reducer into the replay
    fold (durable custom facts are ordinary app events folded by user-space projections);
 4. be **byte-identical to hand-wiring** after boot (zero runtime overhead);
-5. ship **conformance tests** for each SPI you implement (`@loom/conformance` — the import
+5. ship **conformance tests** for each SPI you implement (`@loomwork/conformance` — the import
    `loom plugin check` looks for);
 6. be **sugar, never a gate** — everything a plugin does, an app can also hand-wire.
 
@@ -55,7 +55,7 @@ packages.
 
 - Name it **`loom-plugin-<name>`** (or `@yourscope/loom-plugin-<name>`).
 - Add the npm keyword **`loom-plugin`** so it is discoverable.
-- Depend only on the `@loom/*` **SPI** packages, not on kernel internals. (They are not on npm
+- Depend only on the `@loomwork/*` **SPI** packages, not on kernel internals. (They are not on npm
   yet — inside this repo they resolve via the root `pnpm.overrides`, which `link:` them from a
   sibling `../loom` checkout; see the template's README for what to do when you copy it out.)
 
@@ -65,18 +65,18 @@ Copy [`templates/loom-plugin-template`](templates/loom-plugin-template), rename 
 your seam. Wiring it into an app is symmetric with a first-party plugin — no privileged `kind:`:
 
 ```ts
-import { defineConfig } from "@loom/app";
+import { defineConfig } from "@loomwork/app";
 import { myStorage } from "loom-plugin-mystore";
 
 export const app = defineConfig({ storage: myStorage({ url: process.env.DB_URL! }) });
 ```
 
 **The `policy` seam is the exception**, and it is worth knowing before you assume the shape
-above. A `Policy` ([`loom-plugin-linucb`](plugins/loom-plugin-linucb)) is consumed from *flow
+above. A `Policy` ([`@loomwork/plugin-linucb`](plugins/loom-plugin-linucb)) is consumed from *flow
 code*, never from the composition root:
 
 ```ts
-import { decideWithPolicy } from "@loom/learning";
+import { decideWithPolicy } from "@loomwork/learning";
 
 const route = await decideWithPolicy(ctx, "route", policy, context, actions);
 ```
@@ -92,7 +92,7 @@ A preset and any adapter constructor run at **composition time with full host au
 cannot be sandboxed** — K7 data-plane isolation governs *tool effects at runtime*, not the code
 that builds your runtime. Importing a plugin grants it boot-time authority, exactly like any
 dependency you `import`. Vet 3P plugins as you would any dependency; a plugin listed here is
-**not** vetted by Loom core (that is what the `@loom/` first-party scope is for).
+**not** vetted by Loom core (that is what the `@loomwork/` first-party scope is for).
 
 ## Submitting a plugin
 
@@ -103,9 +103,9 @@ implements, and a link). Listing is discovery, not endorsement.
 
 | Plugin | Seam | Description |
 |---|---|---|
-| [`loom-plugin-linucb`](plugins/loom-plugin-linucb) | `Policy` (`@loom/learning`) | LinUCB contextual bandit — picks per-observation, with honest ε-greedy propensities so the log stays evaluable |
-| [`loom-plugin-graph`](plugins/loom-plugin-graph) | `MemoryStore` (`@loom/memory`) | A knowledge graph over the seam — retrieval that expands from a match to its neighbours, plus traversal (`neighbours`/`subgraph`/`path`). A DECORATOR over the store you already have, because an edge an agent learned from feedback is not derived data the way an embedding index is |
-| [`loom-plugin-vector`](plugins/loom-plugin-vector) | `MemoryStore` (`@loom/memory`) | Retrieval by vector similarity with a pluggable `Embedder` — the unlike implementation of a seam whose only two backends were keyword indexes; passes the published conformance kit unmodified |
-| [`loom-plugin-kms`](plugins/loom-plugin-kms) | `KeyStore` (`@loom/plugin-crypto`) | Durable keys for K10 crypto-shredding via envelope encryption — AWS KMS over SigV4 with no SDK, or a master key you hold. Erasure deletes the wrapped key rather than scheduling a KMS deletion, because a 7–30 day window is not what `destroy()` promises |
-| [`loom-plugin-cloudrun-sandbox`](plugins/loom-plugin-cloudrun-sandbox) | `SandboxBackend` (`@loom/sandbox`) | Runs model-written Python on Google Cloud Run: a TS client plus a stdlib-only Python runner and a `gcloud` recipe for ADR 0144's remote-backend checklist. Capabilities (`network`, `freshPerRun`) are the DEPLOYMENT's, declared by you and earned by running the conformance kit against the deployed URL |
+| [`@loomwork/plugin-linucb`](plugins/loom-plugin-linucb) | `Policy` (`@loomwork/learning`) | LinUCB contextual bandit — picks per-observation, with honest ε-greedy propensities so the log stays evaluable |
+| [`@loomwork/plugin-graph`](plugins/loom-plugin-graph) | `MemoryStore` (`@loomwork/memory`) | A knowledge graph over the seam — retrieval that expands from a match to its neighbours, plus traversal (`neighbours`/`subgraph`/`path`). A DECORATOR over the store you already have, because an edge an agent learned from feedback is not derived data the way an embedding index is |
+| [`@loomwork/plugin-vector`](plugins/loom-plugin-vector) | `MemoryStore` (`@loomwork/memory`) | Retrieval by vector similarity with a pluggable `Embedder` — the unlike implementation of a seam whose only two backends were keyword indexes; passes the published conformance kit unmodified |
+| [`@loomwork/plugin-kms`](plugins/loom-plugin-kms) | `KeyStore` (`@loomwork/plugin-crypto`) | Durable keys for K10 crypto-shredding via envelope encryption — AWS KMS over SigV4 with no SDK, or a master key you hold. Erasure deletes the wrapped key rather than scheduling a KMS deletion, because a 7–30 day window is not what `destroy()` promises |
+| [`@loomwork/plugin-cloudrun-sandbox`](plugins/loom-plugin-cloudrun-sandbox) | `SandboxBackend` (`@loomwork/sandbox`) | Runs model-written Python on Google Cloud Run: a TS client plus a stdlib-only Python runner and a `gcloud` recipe for ADR 0144's remote-backend checklist. Capabilities (`network`, `freshPerRun`) are the DEPLOYMENT's, declared by you and earned by running the conformance kit against the deployed URL |
 | _(your plugin here)_ | | |

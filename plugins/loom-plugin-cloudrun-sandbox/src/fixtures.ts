@@ -3,7 +3,7 @@
  *
  * The script convention is this plugin's runner: the global `input` is the parsed input and the
  * result is the value of the global `result`. The shape is structurally identical to `SandboxFixtures`
- * in `@loom/conformance`; it is declared here so a consumer's runtime does not need the kit.
+ * in `@loomwork/conformance`; it is declared here so a consumer's runtime does not need the kit.
  */
 export interface PythonSandboxFixtures {
   echo: string;

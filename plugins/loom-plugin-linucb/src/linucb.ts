@@ -1,4 +1,4 @@
-import type { Policy, PolicyChoice, PolicyContext, TrajectoryStep } from "@loom/learning";
+import type { Policy, PolicyChoice, PolicyContext, TrajectoryStep } from "@loomwork/learning";
 
 // ── LinUCB (disjoint), a third-party Policy for Loom ─────────────────────────
 //
@@ -13,7 +13,7 @@ import type { Policy, PolicyChoice, PolicyContext, TrajectoryStep } from "@loom/
 // The first term is the predicted reward, the second is the width of its
 // confidence interval — so an arm whose model is uncertain in THIS context gets
 // tried even when its current mean is unimpressive. That is the contextual
-// version of what `ucb1` does per-arm in @loom/reasoning.
+// version of what `ucb1` does per-arm in @loomwork/reasoning.
 //
 // `Aₐ⁻¹` is maintained directly by the Sherman–Morrison identity
 //
@@ -151,7 +151,7 @@ export class LinUcbPolicy<A = string> implements Policy<A> {
         mean += (arm.b[i] as number) * (u[i] as number);
         variance += (x[i] as number) * (u[i] as number);
       }
-      // Ties keep the caller's order, matching `ucb1` in @loom/reasoning.
+      // Ties keep the caller's order, matching `ucb1` in @loomwork/reasoning.
       const score = mean + this.alpha * Math.sqrt(Math.max(0, variance));
       if (score > bestScore) {
         bestScore = score;

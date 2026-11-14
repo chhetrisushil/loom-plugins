@@ -153,7 +153,7 @@ export LOOM_CLOUDRUN_SANDBOX_URL=$URL
 export LOOM_CLOUDRUN_SANDBOX_TOKEN=$(gcloud auth print-identity-token --audiences=$URL)    # (verify)
 export LOOM_CLOUDRUN_SANDBOX_EGRESS=blocked      # claim network: "none"
 export LOOM_CLOUDRUN_SANDBOX_FRESH=1             # claim freshPerRun
-pnpm --filter loom-plugin-cloudrun-sandbox exec vitest run src/live.test.ts
+pnpm --filter @loomwork/plugin-cloudrun-sandbox exec vitest run src/live.test.ts
 ```
 
 - With `EGRESS=blocked` the kit runs the no-network/no-escape case: the Python probes attempt TCP

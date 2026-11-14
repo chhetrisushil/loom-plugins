@@ -6,9 +6,9 @@
 // Replace the bodies below with your real backend. Keep the *shape*: a preset that
 // constructs your stores and returns `{ kind: "custom", ... }`.
 
-import type { EventStore } from "@loom/event-runtime";
-import type { CustomStorage } from "@loom/plugin-kit";
-import type { SnapshotStore } from "@loom/snapshot-runtime";
+import type { EventStore } from "@loomwork/event-runtime";
+import type { CustomStorage } from "@loomwork/plugin-kit";
+import type { SnapshotStore } from "@loomwork/snapshot-runtime";
 
 export interface MyStorageOptions {
   /** e.g. a connection string, a directory, an API token — whatever your backend needs. */

@@ -1,5 +1,5 @@
-import type { MemoryEntry, MemorySearchOptions, MemoryStore } from "@loom/memory";
-import { clampSearchLimit, searchableText, tokenize } from "@loom/memory";
+import type { MemoryEntry, MemorySearchOptions, MemoryStore } from "@loomwork/memory";
+import { clampSearchLimit, searchableText, tokenize } from "@loomwork/memory";
 import { type Embedder, cosine, hashingEmbedder } from "./embed";
 
 export { hashingEmbedder, cosine, normalize } from "./embed";

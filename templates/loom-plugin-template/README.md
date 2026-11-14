@@ -11,14 +11,14 @@ can fall behind it. (`policy` is the one seam consumed from *flow code* rather t
 
 1. Copy this directory out, rename it `loom-plugin-<name>`, and set `name` in `package.json`.
 2. Implement the SPI(s) in `src/index.ts` against your backend.
-3. Prove conformance in `src/index.test.ts` with `@loom/conformance` — `loom plugin check`
+3. Prove conformance in `src/index.test.ts` with `@loomwork/conformance` — `loom plugin check`
    looks for exactly that import, so it is the one that makes your plugin checkable.
 4. Publish. Keep the npm keyword `loom-plugin` for discoverability.
 
 ## Requirements
 
-Depends on the `@loom/*` **SPI** packages — `@loom/event-runtime`, `@loom/snapshot-runtime`,
-`@loom/plugin-kit` (the `CustomStorage` contract), and `@loom/conformance` for the test kit.
+Depends on the `@loomwork/*` **SPI** packages — `@loomwork/event-runtime`, `@loomwork/snapshot-runtime`,
+`@loomwork/plugin-kit` (the `CustomStorage` contract), and `@loomwork/conformance` for the test kit.
 
 Those are **not published to npm yet**. Inside this repo they resolve through the root
 `pnpm.overrides`, which `link:` them from a sibling `../loom` checkout — so clone loom next to

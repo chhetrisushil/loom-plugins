@@ -1,5 +1,5 @@
-import type { MemoryEntry, MemorySearchOptions, MemoryStore } from "@loom/memory";
-import { clampSearchLimit } from "@loom/memory";
+import type { MemoryEntry, MemorySearchOptions, MemoryStore } from "@loomwork/memory";
+import { clampSearchLimit } from "@loomwork/memory";
 import { Adjacency, type Direction, type Edge } from "./graph";
 
 export { Adjacency } from "./graph";
@@ -16,7 +16,7 @@ export type EdgeSource = "derived" | "learned";
 export interface GraphMemoryStoreOptions {
   /**
    * The node an entry belongs to. Defaults to the part of the entry id before `#`, which
-   * is `@loom/knowledge`'s passage convention (`docId#index`) — so a corpus's nodes are
+   * is `@loomwork/knowledge`'s passage convention (`docId#index`) — so a corpus's nodes are
    * its documents with no configuration. Entries with no id are their own node.
    *
    * Override it when your nodes are not documents (a node per user, per service, per
@@ -65,7 +65,7 @@ const DEFAULT_DECAY = 0.4;
  */
 const EDGE_KEY_SUFFIX = "::edges";
 
-/** The default `nodeOf`: `@loom/knowledge`'s `docId#index` convention. */
+/** The default `nodeOf`: `@loomwork/knowledge`'s `docId#index` convention. */
 export function documentNode(entry: MemoryEntry): string {
   const id = entry.id;
   if (id === undefined) return "";
