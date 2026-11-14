@@ -1,8 +1,7 @@
 {
   "name": "loom-plugin-kms",
-  "version": "0.0.0",
-  "private": false,
-  "description": "A Loom keystore plugin \u2014 Per-subject encryption keys (K10 crypto-shredding).",
+  "version": "0.1.0",
+  "description": "A Loom keystore plugin — Per-subject encryption keys (K10 crypto-shredding).",
   "keywords": [
     "loom",
     "loom-plugin",
@@ -24,8 +23,8 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "peerDependencies": {
-    "@loom/core": "*",
-    "@loom/plugin-crypto": "*"
+    "@loom/core": "^0.1.0",
+    "@loom/plugin-crypto": "^0.1.0"
   },
   "devDependencies": {
     "@loom/conformance": "*",
@@ -36,5 +35,23 @@
     "better-sqlite3": "^11.0.0",
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chhetrisushil/loom-plugins.git",
+    "directory": "plugins/loom-plugin-kms"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }

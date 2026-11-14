@@ -1,8 +1,7 @@
 {
   "name": "loom-plugin-vector",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Vector-similarity MemoryStore for Loom \u2014 a third-party implementation of the @loom/memory MemoryStore SPI, with a pluggable Embedder and an offline hashing default.",
+  "version": "0.1.0",
+  "description": "Vector-similarity MemoryStore for Loom — a third-party implementation of the @loom/memory MemoryStore SPI, with a pluggable Embedder and an offline hashing default.",
   "keywords": [
     "loom",
     "loom-plugin",
@@ -27,8 +26,8 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "peerDependencies": {
-    "@loom/core": "*",
-    "@loom/memory": "*"
+    "@loom/core": "^0.1.0",
+    "@loom/memory": "^0.1.0"
   },
   "devDependencies": {
     "@loom/core": "*",
@@ -37,5 +36,22 @@
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chhetrisushil/loom-plugins.git",
+    "directory": "plugins/loom-plugin-vector"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }

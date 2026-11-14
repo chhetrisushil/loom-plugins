@@ -1,7 +1,6 @@
 {
   "name": "loom-plugin-cloudrun-sandbox",
-  "version": "0.0.0",
-  "private": false,
+  "version": "0.1.0",
   "description": "A Loom sandbox backend that runs model-written Python on Google Cloud Run (SandboxBackend, ADR 0144): a stdlib-only runner, a Dockerfile, and a deploy recipe.",
   "keywords": [
     "loom",
@@ -26,7 +25,7 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "peerDependencies": {
-    "@loom/sandbox": "*"
+    "@loom/sandbox": "^0.1.0"
   },
   "devDependencies": {
     "@loom/conformance": "*",
@@ -41,8 +40,19 @@
   },
   "files": [
     "dist",
-    "runner",
     "deploy.md",
-    "README.md"
-  ]
+    "runner",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chhetrisushil/loom-plugins.git",
+    "directory": "plugins/loom-plugin-cloudrun-sandbox"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  }
 }
