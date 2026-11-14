@@ -1,7 +1,7 @@
-import { runMemoryStoreConformance } from "@loom/conformance";
-import { KnowledgeBase } from "@loom/knowledge";
-import { InMemoryMemoryStore, TieredMemory } from "@loom/memory";
-import type { MemoryEntry } from "@loom/memory";
+import { runMemoryStoreConformance } from "@loomwork/conformance";
+import { KnowledgeBase } from "@loomwork/knowledge";
+import { InMemoryMemoryStore, TieredMemory } from "@loomwork/memory";
+import type { MemoryEntry } from "@loomwork/memory";
 import { describe, expect, it } from "vitest";
 import { GraphMemoryStore } from "./index";
 

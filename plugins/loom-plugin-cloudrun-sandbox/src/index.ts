@@ -3,7 +3,7 @@ import type {
   SandboxBackendCapabilities,
   SandboxOutcome,
   SandboxRequest,
-} from "@loom/sandbox";
+} from "@loomwork/sandbox";
 
 export { PYTHON_FIXTURES, NETWORK_PROBE_TARGETS, ESCAPE_PROBE_TARGETS } from "./fixtures";
 export type { PythonSandboxFixtures } from "./fixtures";

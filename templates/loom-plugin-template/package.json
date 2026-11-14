@@ -24,15 +24,15 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "peerDependencies": {
-    "@loom/event-runtime": "*",
-    "@loom/plugin-kit": "*",
-    "@loom/snapshot-runtime": "*"
+    "@loomwork/event-runtime": "*",
+    "@loomwork/plugin-kit": "*",
+    "@loomwork/snapshot-runtime": "*"
   },
   "devDependencies": {
-    "@loom/conformance": "*",
-    "@loom/event-runtime": "*",
-    "@loom/plugin-kit": "*",
-    "@loom/snapshot-runtime": "*",
+    "@loomwork/conformance": "*",
+    "@loomwork/event-runtime": "*",
+    "@loomwork/plugin-kit": "*",
+    "@loomwork/snapshot-runtime": "*",
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"
   }

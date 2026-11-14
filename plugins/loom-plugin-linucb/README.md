@@ -1,15 +1,15 @@
-# `loom-plugin-linucb`
+# `@loomwork/plugin-linucb`
 
 A **LinUCB contextual bandit** for Loom — a third-party implementation of the
 [`Policy` SPI](https://github.com/chhetrisushil/loom/tree/main/packages/learning) from
-`@loom/learning`.
+`@loomwork/learning`.
 
 This package exists to demonstrate the division of labour loom settled on:
 
 | | Who owns it |
 |---|---|
 | the durable `(context, action, propensity, reward)` record | **loom** (`ctx.decide`, ADR 0079) |
-| credit assignment, off-policy evaluation, promotion gate | **loom** (`@loom/learning`, ADR 0080) |
+| credit assignment, off-policy evaluation, promotion gate | **loom** (`@loomwork/learning`, ADR 0080) |
 | **the learning algorithm** | **this package** — third-party |
 
 Loom deliberately ships no reinforcement learning. It ships the substrate, and the maths lives
@@ -18,16 +18,16 @@ out here where it can be swapped without touching a kernel.
 ## Install
 
 ```console
-$ pnpm add loom-plugin-linucb
+$ pnpm add @loomwork/plugin-linucb
 ```
 
-Requires `@loom/learning` as a peer.
+Requires `@loomwork/learning` as a peer.
 
 ## Use
 
 ```ts
-import { decideWithPolicy } from "@loom/learning";
-import { LinUcbPolicy, numericFeatures } from "loom-plugin-linucb";
+import { decideWithPolicy } from "@loomwork/learning";
+import { LinUcbPolicy, numericFeatures } from "@loomwork/plugin-linucb";
 
 const policy = new LinUcbPolicy<string>({
   version: "2026-08-12",
@@ -43,7 +43,7 @@ const route = await decideWithPolicy(ctx, "route", policy, { tokens, retries }, 
 Training happens **offline**, from logs the runtime already wrote:
 
 ```ts
-import { trajectories, steps } from "@loom/learning";
+import { trajectories, steps } from "@loomwork/learning";
 
 const policy = new LinUcbPolicy<string>({ ...numericFeatures(["tokens", "retries"]) });
 const applied = policy.fit(steps(trajectories(events)));
@@ -86,7 +86,7 @@ score(a) = θₐ·x + α·√(xᵀ Aₐ⁻¹ x)          θₐ = Aₐ⁻¹ bₐ
 The first term predicts the reward; the second is the width of that prediction's confidence
 interval — so an arm whose model is uncertain **in this context** gets tried even when its
 current mean is unimpressive. That is the contextual counterpart of `ucb1` in
-`@loom/reasoning` ([ADR 0078](https://github.com/chhetrisushil/loom/blob/main/docs/adr/0078-exploration-in-the-routing-seam.md)),
+`@loomwork/reasoning` ([ADR 0078](https://github.com/chhetrisushil/loom/blob/main/docs/adr/0078-exploration-in-the-routing-seam.md)),
 which explores per-arm without looking at the observation.
 
 `Aₐ⁻¹` is maintained directly via Sherman–Morrison:

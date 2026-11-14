@@ -1,5 +1,5 @@
-import { runPolicyConformance } from "@loom/conformance";
-import type { PolicyContext, TrajectoryStep } from "@loom/learning";
+import { runPolicyConformance } from "@loomwork/conformance";
+import type { PolicyContext, TrajectoryStep } from "@loomwork/learning";
 import { describe, expect, it } from "vitest";
 import { LinUcbPolicy, numericFeatures, oneHotFeatures } from "./linucb";
 
@@ -225,7 +225,7 @@ describe("featurizers", () => {
   });
 });
 
-// The SPI kit from @loom/conformance — proves this package satisfies the Policy
+// The SPI kit from @loomwork/conformance — proves this package satisfies the Policy
 // contract itself, not just that its own maths works. Run against the ε-greedy
 // configuration, since that is the one with a non-trivial propensity to check.
 runPolicyConformance<string>(

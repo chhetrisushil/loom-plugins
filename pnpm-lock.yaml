@@ -5,19 +5,19 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@loom/analytics': link:../loom/packages/analytics
-  '@loom/conformance': link:../loom/packages/conformance
-  '@loom/core': link:../loom/packages/core
-  '@loom/event-runtime': link:../loom/packages/event-runtime
-  '@loom/knowledge': link:../loom/packages/knowledge
-  '@loom/learning': link:../loom/packages/learning
-  '@loom/memory': link:../loom/packages/memory
-  '@loom/plugin-crypto': link:../loom/plugins/crypto
-  '@loom/plugin-kit': link:../loom/packages/plugin-kit
-  '@loom/reasoning': link:../loom/packages/reasoning
-  '@loom/sandbox': link:../loom/packages/sandbox
-  '@loom/snapshot-runtime': link:../loom/packages/snapshot-runtime
-  '@loom/testing': link:../loom/tools/testing
+  '@loomwork/analytics': link:../loom/packages/analytics
+  '@loomwork/conformance': link:../loom/packages/conformance
+  '@loomwork/core': link:../loom/packages/core
+  '@loomwork/event-runtime': link:../loom/packages/event-runtime
+  '@loomwork/knowledge': link:../loom/packages/knowledge
+  '@loomwork/learning': link:../loom/packages/learning
+  '@loomwork/memory': link:../loom/packages/memory
+  '@loomwork/plugin-crypto': link:../loom/plugins/crypto
+  '@loomwork/plugin-kit': link:../loom/packages/plugin-kit
+  '@loomwork/reasoning': link:../loom/packages/reasoning
+  '@loomwork/sandbox': link:../loom/packages/sandbox
+  '@loomwork/snapshot-runtime': link:../loom/packages/snapshot-runtime
+  '@loomwork/testing': link:../loom/tools/testing
 
 importers:
 
@@ -25,13 +25,13 @@ importers:
 
   plugins/loom-plugin-cloudrun-sandbox:
     devDependencies:
-      '@loom/conformance':
+      '@loomwork/conformance':
         specifier: link:../../../loom/packages/conformance
         version: link:../../../loom/packages/conformance
-      '@loom/core':
+      '@loomwork/core':
         specifier: link:../../../loom/packages/core
         version: link:../../../loom/packages/core
-      '@loom/sandbox':
+      '@loomwork/sandbox':
         specifier: link:../../../loom/packages/sandbox
         version: link:../../../loom/packages/sandbox
       '@types/node':
@@ -46,16 +46,16 @@ importers:
 
   plugins/loom-plugin-graph:
     devDependencies:
-      '@loom/conformance':
+      '@loomwork/conformance':
         specifier: link:../../../loom/packages/conformance
         version: link:../../../loom/packages/conformance
-      '@loom/core':
+      '@loomwork/core':
         specifier: link:../../../loom/packages/core
         version: link:../../../loom/packages/core
-      '@loom/knowledge':
+      '@loomwork/knowledge':
         specifier: link:../../../loom/packages/knowledge
         version: link:../../../loom/packages/knowledge
-      '@loom/memory':
+      '@loomwork/memory':
         specifier: link:../../../loom/packages/memory
         version: link:../../../loom/packages/memory
       typescript:
@@ -67,13 +67,13 @@ importers:
 
   plugins/loom-plugin-kms:
     devDependencies:
-      '@loom/conformance':
+      '@loomwork/conformance':
         specifier: link:../../../loom/packages/conformance
         version: link:../../../loom/packages/conformance
-      '@loom/core':
+      '@loomwork/core':
         specifier: link:../../../loom/packages/core
         version: link:../../../loom/packages/core
-      '@loom/plugin-crypto':
+      '@loomwork/plugin-crypto':
         specifier: link:../../../loom/plugins/crypto
         version: link:../../../loom/plugins/crypto
       '@types/better-sqlite3':
@@ -94,10 +94,10 @@ importers:
 
   plugins/loom-plugin-linucb:
     devDependencies:
-      '@loom/conformance':
+      '@loomwork/conformance':
         specifier: link:../../../loom/packages/conformance
         version: link:../../../loom/packages/conformance
-      '@loom/learning':
+      '@loomwork/learning':
         specifier: link:../../../loom/packages/learning
         version: link:../../../loom/packages/learning
       typescript:
@@ -109,13 +109,13 @@ importers:
 
   plugins/loom-plugin-vector:
     devDependencies:
-      '@loom/conformance':
+      '@loomwork/conformance':
         specifier: link:../../../loom/packages/conformance
         version: link:../../../loom/packages/conformance
-      '@loom/core':
+      '@loomwork/core':
         specifier: link:../../../loom/packages/core
         version: link:../../../loom/packages/core
-      '@loom/memory':
+      '@loomwork/memory':
         specifier: link:../../../loom/packages/memory
         version: link:../../../loom/packages/memory
       typescript:
@@ -127,16 +127,16 @@ importers:
 
   templates/loom-plugin-template:
     devDependencies:
-      '@loom/conformance':
+      '@loomwork/conformance':
         specifier: link:../../../loom/packages/conformance
         version: link:../../../loom/packages/conformance
-      '@loom/event-runtime':
+      '@loomwork/event-runtime':
         specifier: link:../../../loom/packages/event-runtime
         version: link:../../../loom/packages/event-runtime
-      '@loom/plugin-kit':
+      '@loomwork/plugin-kit':
         specifier: link:../../../loom/packages/plugin-kit
         version: link:../../../loom/packages/plugin-kit
-      '@loom/snapshot-runtime':
+      '@loomwork/snapshot-runtime':
         specifier: link:../../../loom/packages/snapshot-runtime
         version: link:../../../loom/packages/snapshot-runtime
       typescript:

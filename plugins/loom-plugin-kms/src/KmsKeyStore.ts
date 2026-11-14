@@ -1,8 +1,8 @@
 import { randomBytes } from "node:crypto";
-import type { KeyStore } from "@loom/plugin-crypto";
+import type { KeyStore } from "@loomwork/plugin-crypto";
 import type { KeyWrapper, WrappedKeyStore } from "./types";
 
-/** AES-256: the key size `@loom/plugin-crypto` encrypts payload fields with. */
+/** AES-256: the key size `@loomwork/plugin-crypto` encrypts payload fields with. */
 const DATA_KEY_BYTES = 32;
 
 export interface KmsKeyStoreOptions {

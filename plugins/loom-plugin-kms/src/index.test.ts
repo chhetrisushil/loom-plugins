@@ -3,7 +3,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import Database from "better-sqlite3";
-import { runKeyStoreConformance } from "@loom/conformance";
+import { runKeyStoreConformance } from "@loomwork/conformance";
 import { describe, expect, it } from "vitest";
 import { KmsKeyStore } from "./KmsKeyStore";
 import { InMemoryWrappedKeyStore, SqliteWrappedKeyStore } from "./stores";

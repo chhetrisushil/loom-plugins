@@ -1,24 +1,24 @@
-# loom-plugin-kms
+# @loomwork/plugin-kms
 
 A durable `KeyStore` for Loom's K10 crypto-shredding, built on **envelope encryption**.
 
 Loom encrypts sensitive payload fields at rest and satisfies erasure by destroying the key —
 so the key *is* the erasure boundary. Losing one is indistinguishable from shredding the
 subject: the writes succeed, the log survives, and every field encrypted under it is
-unreadable from the next boot. `@loom/plugin-crypto` ships only `InMemoryKeyStore`, which
+unreadable from the next boot. `@loomwork/plugin-crypto` ships only `InMemoryKeyStore`, which
 declares `durable: false` and which `loom doctor` refuses in an app.
 
 This is the store that makes that check pass.
 
 ```bash
-pnpm add loom-plugin-kms better-sqlite3
+pnpm add @loomwork/plugin-kms better-sqlite3
 ```
 
 ```ts
 import Database from "better-sqlite3";
-import { EncryptingArchiveStore, EncryptingEventStore } from "@loom/plugin-crypto";
-import { SqliteArchiveStore } from "@loom/plugin-sqlite";
-import { AwsKmsWrapper, KmsKeyStore, SqliteWrappedKeyStore } from "loom-plugin-kms";
+import { EncryptingArchiveStore, EncryptingEventStore } from "@loomwork/plugin-crypto";
+import { SqliteArchiveStore } from "@loomwork/plugin-sqlite";
+import { AwsKmsWrapper, KmsKeyStore, SqliteWrappedKeyStore } from "@loomwork/plugin-kms";
 
 const keys = new KmsKeyStore({
   wrapper: new AwsKmsWrapper({
@@ -110,7 +110,7 @@ or DynamoDB is a short class too.
 ## Conformance
 
 ```ts
-import { runKeyStoreConformance } from "@loom/conformance";
+import { runKeyStoreConformance } from "@loomwork/conformance";
 runKeyStoreConformance(() => new KmsKeyStore({ wrapper, store }));
 ```
 

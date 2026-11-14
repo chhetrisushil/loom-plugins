@@ -1,15 +1,15 @@
-# loom-plugin-graph
+# @loomwork/plugin-graph
 
 A **knowledge graph over Loom's memory seam**: retrieval that expands from a match to its
 neighbours, plus a traversal API for the questions retrieval cannot ask.
 
 It is a **decorator**, not a store. It wraps the `MemoryStore` your app already has —
-`SqliteMemoryStore`, `PostgresMemoryStore`, or `loom-plugin-vector` — and adds a graph over
+`SqliteMemoryStore`, `PostgresMemoryStore`, or `@loomwork/plugin-vector` — and adds a graph over
 the entries in it.
 
 ```ts
-import { GraphMemoryStore } from "loom-plugin-graph";
-import { SqliteMemoryStore } from "@loom/plugin-sqlite";
+import { GraphMemoryStore } from "@loomwork/plugin-graph";
+import { SqliteMemoryStore } from "@loomwork/plugin-sqlite";
 
 const memoryStore = new GraphMemoryStore(new SqliteMemoryStore(".loom/events.db"));
 export default defineConfig({ storage: sqliteStorage({ dir: ".loom" }), memoryStore });
@@ -17,7 +17,7 @@ export default defineConfig({ storage: sqliteStorage({ dir: ".loom" }), memorySt
 
 ## Why a decorator
 
-`loom-plugin-vector` *replaces* the store, and that is right for it: an embedding index is
+`@loomwork/plugin-vector` *replaces* the store, and that is right for it: an embedding index is
 derived data, so losing it costs a re-embed and nothing else.
 
 A graph is not always derived. An edge an agent concluded from feedback — *this remedy fixed
@@ -83,7 +83,7 @@ recorded traversal has to replay to the same nodes.
 
 ## Over a `KnowledgeBase`
 
-The defaults are `@loom/knowledge`'s conventions, so a corpus becomes a graph with no
+The defaults are `@loomwork/knowledge`'s conventions, so a corpus becomes a graph with no
 configuration: `nodeOf` reads the document id out of the passage id (`docId#index`), and
 `edgesOf` reads `meta.links`. Declaring links in a document is enough, and `sync` maintains
 them — revise the document and its edges are rewritten with it.
@@ -113,7 +113,7 @@ Override both when your nodes are not documents (a node per service, per user, p
   re-reads that key. A decorator does not own the storage, so maintaining an index
   incrementally would mean trusting that nothing else writes to the same store — an assumption
   a decorator cannot make.
-- **`nodeOf`'s default couples to `@loom/knowledge`'s id convention.** That is a default, not a
+- **`nodeOf`'s default couples to `@loomwork/knowledge`'s id convention.** That is a default, not a
   requirement; pass your own and nothing else changes.
 - **Edges are not typed or validated.** `rel` is your vocabulary — this plugin filters by it
   and never interprets it.

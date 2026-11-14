@@ -1,5 +1,5 @@
 {
-  "name": "loom-plugin-graph",
+  "name": "@loomwork/plugin-graph",
   "version": "0.1.0",
   "description": "Knowledge-graph MemoryStore decorator for Loom — graph-expanded retrieval plus a traversal API, over any MemoryStore, with learned edges persisted in the store you already have.",
   "keywords": [
@@ -26,14 +26,14 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "peerDependencies": {
-    "@loom/core": "^0.1.0",
-    "@loom/memory": "^0.1.0"
+    "@loomwork/core": "^0.1.0",
+    "@loomwork/memory": "^0.1.0"
   },
   "devDependencies": {
-    "@loom/conformance": "*",
-    "@loom/core": "*",
-    "@loom/knowledge": "*",
-    "@loom/memory": "*",
+    "@loomwork/conformance": "*",
+    "@loomwork/core": "*",
+    "@loomwork/knowledge": "*",
+    "@loomwork/memory": "*",
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"
   },
