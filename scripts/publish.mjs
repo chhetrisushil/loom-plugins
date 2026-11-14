@@ -4,6 +4,10 @@
 //   node scripts/publish.mjs          # DRY RUN: packs each plugin and reports what would ship
 //   node scripts/publish.mjs --yes    # really publish (needs `npm login`)
 //
+// Then, once the release is verified, promote it: `node ../loom/scripts/promote-latest.mjs --yes` moves
+// `latest` to it (loom ADR 0148 amendment: npm set `latest` on the first publish, and `^` ranges resolve
+// to it, so a release left on `next` alone is not what consumers install).
+//
 // Refused unless the git tree is clean and every public plugin is built (`dist/` present). The root
 // LICENSE and NOTICE are copied into each plugin for the pack and removed afterwards (git-ignored).
 // Publish AFTER the @loomwork/* versions the plugins' peer ranges name are on the registry.
