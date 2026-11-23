@@ -1,6 +1,6 @@
 {
   "name": "@loomwork/plugin-linucb",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "LinUCB contextual bandit for Loom — a third-party implementation of the @loomwork/learning Policy SPI.",
   "keywords": [
     "loom",
@@ -26,7 +26,7 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "peerDependencies": {
-    "@loomwork/learning": "^0.1.5"
+    "@loomwork/learning": "^0.1.6"
   },
   "devDependencies": {
     "@loomwork/learning": "*",
