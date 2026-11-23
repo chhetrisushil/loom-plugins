@@ -1,6 +1,6 @@
 {
   "name": "@loomwork/plugin-cloudrun-sandbox",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "A Loom sandbox backend that runs model-written Python on Google Cloud Run (SandboxBackend, ADR 0144): a stdlib-only runner, a Dockerfile, and a deploy recipe.",
   "keywords": [
     "loom",
@@ -25,7 +25,7 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "peerDependencies": {
-    "@loomwork/sandbox": "^0.1.0"
+    "@loomwork/sandbox": "^0.1.5"
   },
   "devDependencies": {
     "@loomwork/conformance": "*",
