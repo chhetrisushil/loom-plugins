@@ -1,6 +1,6 @@
 {
   "name": "@loomwork/plugin-vector",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Vector-similarity MemoryStore for Loom — a third-party implementation of the @loomwork/memory MemoryStore SPI, with a pluggable Embedder and an offline hashing default.",
   "keywords": [
     "loom",
@@ -26,8 +26,8 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "peerDependencies": {
-    "@loomwork/core": "^0.1.6",
-    "@loomwork/memory": "^0.1.6"
+    "@loomwork/core": "^0.1.7",
+    "@loomwork/memory": "^0.1.7"
   },
   "devDependencies": {
     "@loomwork/core": "*",
